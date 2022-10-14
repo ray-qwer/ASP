@@ -5,7 +5,7 @@ w1_i = linspace(-3,3,201);
 [w0_R,w1_I] = meshgrid(w0_r,w1_i);
 j_surf = zeros(size(w0_R));
 for i = 1:size(j_surf(:))
-    w = [w0_R(i)+0.3j; -0.6+w1_I(i); 0.5+1.6j ];
+    w = [w0_R(i)+0.3j; -0.6+w1_I(i)*j; 0.5+1.6j ];
     j_surf(i) = ASP_Wiener_MSE(R,w,p,sd2);
 end
 
@@ -16,7 +16,7 @@ title("ASP\_HW1\_Problem\_7e")
 hold on;
 
 syms W0_R W1_I;
-w_syms = [W0_R+0.3j; -0.6+W1_I; 0.5+1.6j];
+w_syms = [W0_R+0.3j; -0.6+W1_I*j; 0.5+1.6j];
 funcJ = ASP_Wiener_MSE(R,w_syms,p,sd2);
 g = gradient(funcJ,[W0_R,W1_I]);
 g_s = solve(g == sym(0));
