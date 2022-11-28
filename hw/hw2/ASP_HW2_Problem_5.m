@@ -31,7 +31,7 @@ end
 % end
 % p(2:end) = conj(p(2:end));
 
-wopt = Rx\p;
+wopt = inv(Rx) *p;
 
 % v, & construct x
 v =load("ASP_HW2_Problem_5.mat","matV");
@@ -92,61 +92,40 @@ d_RLS_3 = d_RLS_3/ R;
 t = 1:L;
 figure(1);
 sgtitle("Problem 5(a)");
-subplot(3,2,1);
-plot(t, e_LMS_1);
+subplot(2,1,1);
+plot(t, log(e_LMS_1));
 hold on;
-title("MSE of LMS");
-plot(t, e_LMS_2);
-legend("\mu = 0.05", "\mu = 0.1");
+plot(t, log(e_LMS_2));
+plot(t, log(e_NLMS_1));
+plot(t, log(e_NLMS_2));
+plot(t, log(e_RLS_1));
+plot(t, log(e_RLS_2));
+plot(t, log(e_RLS_3));
+legend('LMS, $$\mu = 0.05$$', 'LMS, $$\mu = 0.1$$', ...
+    'NLMS, $$\tilde{\mu} = 0.8$$', 'NLMS, $$\tilde{\mu} = 0.9$$',...
+    'RLS, $$\delta = 0.01, \lambda = 0.5$$', 'RLS, $$\delta = 0.01, \lambda = 0.8$$',['RLS, $$\delta = 0.01,' ...
+    '  \lambda = 0.9$$'],'Interpreter','latex');
 xlabel("n");
-ylabel("$\hat{J}(n)$","Interpreter","latex");
+ylabel("$log(\hat{J}(n))$","Interpreter","latex");
+title("MSE");
 hold off;
-subplot(3,2,2);
-plot(t, d_LMS_1);
+
+subplot(2,1,2);
+plot(t, log(d_LMS_1));
 hold on;
-plot(t, d_LMS_2);
-title("MSD of LMS");
-legend("\mu = 0.05", "\mu = 0.1");
+plot(t, log(d_LMS_2));
+plot(t, log(d_NLMS_1));
+plot(t, log(d_NLMS_2));
+plot(t, log(d_RLS_1));
+plot(t, log(d_RLS_2));
+plot(t, log(d_RLS_3));
+title("MSD");
+legend('LMS, $$\mu = 0.05$$', 'LMS, $$\mu = 0.1$$', ...
+    'NLMS, $$\tilde{\mu} = 0.8$$', 'NLMS, $$\tilde{\mu} = 0.9$$',...
+    'RLS, $$\delta = 0.01, \lambda = 0.5$$', 'RLS, $$\delta = 0.01, \lambda = 0.8$$',['RLS, $$\delta = 0.01,' ...
+    '  \lambda = 0.9$$'],'Interpreter','latex');
 xlabel("n");
-ylabel("$\hat{D}(n)$","Interpreter","latex");
-hold off;
-subplot(3,2,3);
-plot(t, e_NLMS_1);
-hold on;
-plot(t, e_NLMS_2);
-title("MSE of NLMS");
-xlabel("n");
-ylabel("$\hat{J}(n)$","Interpreter","latex");
-legend('$$\tilde{\mu} = 0.8$$', '$$\tilde{\mu} = 0.9$$','Interpreter','latex');
-hold off;
-subplot(3,2,4);
-plot(t, d_NLMS_1);
-hold on;
-plot(t, d_NLMS_2);
-title("MSD of NLMS");
-xlabel("n");
-ylabel("$\hat{J}(n)$","Interpreter","latex");
-legend('$$\tilde{\mu} = 0.8$$', '$$\tilde{\mu} = 0.9$$','Interpreter','latex');
-hold off;
-subplot(3,2,5);
-plot(t, e_RLS_1);
-hold on;
-plot(t, e_RLS_2);
-plot(t, e_RLS_3);
-title("MSE of RLS");
-xlabel("n");
-ylabel("$\hat{J}(n)$","Interpreter","latex");
-legend('$$\delta = 0.01, \lambda = 0.5$$', '$$\delta = 0.01, \lambda = 0.8$$','$$\delta = 0.01, \lambda = 0.9$$','Interpreter','latex');
-hold off;
-subplot(3,2,6);
-plot(t, d_RLS_1);
-hold on;
-plot(t, d_RLS_2);
-plot(t, d_RLS_2);
-title("MSD of RLS");
-xlabel("n");
-ylabel("$\hat{J}(n)$","Interpreter","latex");
-legend('$$\delta = 0.01, \lambda = 0.5$$', '$$\delta = 0.01, \lambda = 0.8$$','$$\delta = 0.01, \lambda = 0.9$$','Interpreter','latex');
+ylabel("$log(\hat{D}(n))$","Interpreter","latex");
 hold off;
 % ===================================================================================================
 % b, R = 1000
@@ -197,79 +176,60 @@ d_RLS_3 = d_RLS_3/ R;
 t = 1:L;
 figure(2);
 sgtitle("Problem 5(b)");
-subplot(3,2,1);
-plot(t, e_LMS_1);
+subplot(2,1,1);
+plot(t, log(e_LMS_1));
 hold on;
-title("MSE of LMS");
-plot(t, e_LMS_2);
-legend("\mu = 0.05", "\mu = 0.1");
+plot(t, log(e_LMS_2));
+plot(t, log(e_NLMS_1));
+plot(t, log(e_NLMS_2));
+plot(t, log(e_RLS_1));
+plot(t, log(e_RLS_2));
+plot(t, log(e_RLS_3));
+legend('LMS, $$\mu = 0.05$$', 'LMS, $$\mu = 0.1$$', ...
+    '$$NLMS, \tilde{\mu} = 0.8$$', '$$NLMS, \tilde{\mu} = 0.9$$',...
+    'RLS, $$\delta = 0.01, \lambda = 0.5$$', 'RLS, $$\delta = 0.01, \lambda = 0.8$$',['RLS, $$\delta = 0.01,' ...
+    '  \lambda = 0.9$$'],'Interpreter','latex');
 xlabel("n");
-ylabel("$\hat{J}(n)$","Interpreter","latex");
+ylabel("$log(\hat{J}(n))$","Interpreter","latex");
+title("MSE");
 hold off;
-subplot(3,2,2);
-plot(t, d_LMS_1);
+
+subplot(2,1,2);
+plot(t, log(d_LMS_1));
 hold on;
-plot(t, d_LMS_2);
-title("MSD of LMS");
-legend("\mu = 0.05", "\mu = 0.1");
+plot(t, log(d_LMS_2));
+plot(t, log(d_NLMS_1));
+plot(t, log(d_NLMS_2));
+plot(t, log(d_RLS_1));
+plot(t, log(d_RLS_2));
+plot(t, log(d_RLS_3));
+title("MSD");
+legend('LMS, $$\mu = 0.05$$', 'LMS, $$\mu = 0.1$$', ...
+    'NLMS, $$\tilde{\mu} = 0.8$$', 'NLMS, $$\tilde{\mu} = 0.9$$',...
+    'RLS, $$\delta = 0.01, \lambda = 0.5$$', 'RLS, $$\delta = 0.01, \lambda = 0.8$$',['RLS, $$\delta = 0.01,' ...
+    '  \lambda = 0.9$$'],'Interpreter','latex');
 xlabel("n");
-ylabel("$\hat{D}(n)$","Interpreter","latex");
+ylabel("$log(\hat{D}(n))$","Interpreter","latex");
 hold off;
-subplot(3,2,3);
-plot(t, e_NLMS_1);
-hold on;
-plot(t, e_NLMS_2);
-title("MSE of NLMS");
-xlabel("n");
-ylabel("$\hat{J}(n)$","Interpreter","latex");
-legend('$$\tilde{\mu} = 0.8$$', '$$\tilde{\mu} = 0.9$$','Interpreter','latex');
-hold off;
-subplot(3,2,4);
-plot(t, d_NLMS_1);
-hold on;
-plot(t, d_NLMS_2);
-title("MSD of NLMS");
-xlabel("n");
-ylabel("$\hat{J}(n)$","Interpreter","latex");
-legend('$$\tilde{\mu} = 0.8$$', '$$\tilde{\mu} = 0.9$$','Interpreter','latex');
-hold off;
-subplot(3,2,5);
-plot(t, e_RLS_1);
-hold on;
-plot(t, e_RLS_2);
-plot(t, e_RLS_3);
-title("MSE of RLS");
-xlabel("n");
-ylabel("$\hat{J}(n)$","Interpreter","latex");
-legend('$$\delta = 0.01, \lambda = 0.5$$', '$$\delta = 0.01, \lambda = 0.8$$','$$\delta = 0.01, \lambda = 0.9$$','Interpreter','latex');
-hold off;
-subplot(3,2,6);
-plot(t, d_RLS_1);
-hold on;
-plot(t, d_RLS_2);
-plot(t, d_RLS_2);
-title("MSD of RLS");
-xlabel("n");
-ylabel("$\hat{J}(n)$","Interpreter","latex");
-legend('$$\delta = 0.01, \lambda = 0.5$$', '$$\delta = 0.01, \lambda = 0.8$$','$$\delta = 0.01, \lambda = 0.9$$','Interpreter','latex');
-hold off;
+
 % ===================================================================================================
 % c, misadjustment
 % Jex(n) = J(n) - Jmin
 % M = 1/Jmin lim{n->inf} Jex
+Jmin = 1 - p'*wopt;
 Mis = zeros(1,7);
-Mis(1) = e_LMS_1(end) / min(e_LMS_1);
-Mis(2) = e_LMS_2(end) / min(e_LMS_2);
-Mis(3) = e_NLMS_1(end) / min(e_NLMS_1);
-Mis(4) = e_NLMS_2(end) / min(e_NLMS_2);
-Mis(5) = e_RLS_1(end) / min(e_RLS_1);
-Mis(6) = e_RLS_2(end) / min(e_RLS_2);
-Mis(7) = e_RLS_3(end) / min(e_RLS_3);
+Mis(1) = e_LMS_1(end) ;
+Mis(2) = e_LMS_2(end) ;
+Mis(3) = e_NLMS_1(end) ;
+Mis(4) = e_NLMS_2(end) ;
+Mis(5) = e_RLS_1(end) ;
+Mis(6) = e_RLS_2(end) ;
+Mis(7) = e_RLS_3(end) ;
 name_list = ["LMS,u= 0.05", "LMS, u= 0.1","NLMS,u= 0.8", "NLMS, u= 0.9", ...
     "RLS,lambda= 0.5, delta= 0.01", "RLS,lambda= 0.8, delta= 0.01","RLS,lambda= 0.9, delta= 0.01"];
 
 for i = 1:length(name_list)
-    disp(name_list(i)+": "+Mis(i));
+    disp(name_list(i)+": "+(Mis(i)-Jmin)/Jmin);
 end
 
 

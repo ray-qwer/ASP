@@ -28,7 +28,7 @@ for k = 0:-1:-M+1
     p(abs(k)+1) = integral(Hk, -1/2, 1/2);
 end
 
-wopt = R\p;
+wopt = R\ p;
 disp("i:");
 disp("wopt= [");
 for k = 1:length(wopt)
@@ -37,8 +37,8 @@ end
 disp("]");
 e = eig(R);
 disp("ii:");
-disp(max(e)-min(e));
-
+disp(max(e)/min(e));
+e = sort(e);
 disp("iii:");
 disp(length(e));
 disp("iv");
