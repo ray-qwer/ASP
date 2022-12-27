@@ -5,7 +5,7 @@ function [e_RLS, w_RLS] = ASP_RLS(x_input, d_input, delta, lambda, M)
 
     % initj
     e_RLS(1) = d_input(1);
-    data = [zeros(1, M-1), x_input];
+    data = [ones(1, M-1)*x_input(1), x_input];
     P = eye(M)/delta;
     % iterate
     for m = 2:L
