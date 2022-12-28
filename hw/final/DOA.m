@@ -69,3 +69,16 @@ plot(t,theta_i_hat);
 hold on;
 plot(t, theta_i_ifft);
 hold off;
+
+IMF_set = hht(theta_i_noisy, t, 4);
+figure(5)
+for i = 1:size(IMF_set,1)
+    subplot(size(IMF_set,1),1,i);
+    plot(t, IMF_set(i,:));
+end
+figure(6);
+recon_s = sum(IMF_set(2:end,:),1);
+plot(t, theta_i_noisy);
+hold on;
+plot(t,recon_s);
+hold off;
