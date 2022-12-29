@@ -1,4 +1,4 @@
-% LCMV
+%% load data
 matX = load("ASP_Final_Data.mat","matX");
 theta_s_noisy = load("ASP_Final_Data.mat","theta_s_noisy");
 theta_i_noisy = load("ASP_Final_Data.mat","theta_i_noisy");
@@ -7,16 +7,20 @@ theta_i_noisy = theta_i_noisy.theta_i_noisy;
 theta_s_noisy = theta_s_noisy.theta_s_noisy;
 t = [1:length(theta_s_noisy)];
 
+%% denoise theta_i;
 threshold = 0.006;
 IMF_set_i = hht(theta_i_noisy, t, 4);
 mean_set_i = mean(IMF_set_i,2);
 start_index_i = find(abs(mean_set_i) > threshold,1);
 theta_i_denoise = sum(IMF_set_i(start_index_i:end,:),1);
 
+%% denoise theta_s 
 IMF_set_s = hht(theta_s_noisy, t, 3);
 mean_set_s = mean(IMF_set_s,2);
 start_index_s = find(abs(mean_set_s) > threshold,1);
 theta_s_denoise = sum(IMF_set_s(start_index_s:end,:),1);
+
+%% plotting denoised signal 
 figure(1);
 plot(t,theta_s_denoise);
 hold on;
@@ -27,6 +31,7 @@ legend('$$\hat{\theta _s}(t)$$','$$\hat{\theta _i}(t)$$','Interpreter','latex');
 xlabel("time");
 ylabel("angle(degree)");
 
+%% LCMV
 g = [1 0.002].';
 
 delta = 0.01; lambda = 0.995;
@@ -40,11 +45,13 @@ for i = 1:length(theta_s_noisy)
     w(:,i) = P*C*((C'*P*C)\g);
 end
 
+%% gen s_t from weight
 y = zeros(size(theta_s_noisy));
 for i = 1:length(theta_s_noisy)
     y(i) = w(:,i)' * matX(:,i);
 end
 
+%% plotting s_t
 figure(2);
 % title("estimated source signal");
 subplot(211);
@@ -58,3 +65,9 @@ title('imag part of $$\hat{s}(t)$$','Interpreter','latex');
 xlabel("time");
 ylabel("magnitude");
 sgtitle('estimated source signal $$\hat{s}(t)$$','Interpreter','Latex');
+
+%% saving data
+theta_s_hat = theta_s_denoise;
+theta_i_hat = theta_i_denoise;
+s_t_hat = y;
+save r11942085_許宸睿_ASPFinal_PerformanceEvaluation.mat theta_s_hat theta_i_hat y
