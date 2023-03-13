@@ -1,9 +1,9 @@
-# 2022 NTU Course: Adaptive Signal Process
-teacher: J.L.Liu
+# 2022 Fall NTU Course: Adaptive Signal Process
+Teacher: J.L.Liu
 
 This repo is a record of the course **Adaptive Signal Process**.
 
-The rank got an A after a semester.
+The rank got an A after the semester.
 
 and the detail score is shown at below graph:
 
@@ -43,3 +43,5 @@ The main code is at **ASP_HW3_Problem_4.m**
 The final asked us for designing a filter, no matter it has been mentioned in class, to recover the DOA.
 
 The filter made by HHT performed not good at all. Dont use it anymore!!
+
+And, really recommend to make sure if the variable in the **.mat** is the same with the required!!
